@@ -1,24 +1,33 @@
 # start-page
 
-修改 `src/utils/global.js` 中 95 行 `backgroundImageApi` 来更改背景图片，该 api 应该返回一张图片
+一个简单的起始页
 
-## 书签
+# get 参数
 
-书签需要 password 参数
+- backgroundImageApi
 
-如 https://yoursite.com/start-page/index.html?password=yourpassword
+    base64 编码的图片 URL
 
-## 书签接口
+- bookmarkApi
 
-修改 `.env.production` 文件中的 VUE_APP_DOMAIN 变量来更改打包后的网络请求域名
+    base64 编码的后端地址，默认为：
 
-网络请求地址如下
+    ```js
+    const api = `${process.env.VUE_APP_TRANSFER_PROTOCOL}://${process.env.VUE_APP_DOMAIN}`
+    const bookmarkApi = Base64.encode(`${api}/api/bookmark`)
+    ```
 
-```js
-`${process.env.VUE_APP_TRANSFER_PROTOCOL}://${process.env.VUE_APP_DOMAIN}/api/bookmark?password=yourpassword`
-```
+- bookmarkApiPassword
 
-因此您的后端需要有 `/api/bookmark` 的路由，并且需要验证 query 参数 `password`
+    后端接口所使用的密码，不要进行编码
+
+# 书签接口
+
+假设您的后端地址为 `https://yoursite.com/api/bookmark`，则向后端请求时的 URL 将会被拼接成如下形式：
+
+`https://yoursite.com/api/bookmark?password=yourpassword`
+
+您的后端需要验证 query 参数 `password`
 
 - get 请求
 
@@ -28,7 +37,7 @@
 
     保存书签
 
-### 格式
+## 格式
 
 ```json
 [

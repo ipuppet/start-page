@@ -24,6 +24,8 @@
 </template>
 
 <script>
+import { ElMessage } from 'element-plus'
+
 export default {
     name: 'Setting',
     data: () => ({
@@ -31,15 +33,14 @@ export default {
     }),
     methods: {
         downloadBackgroundImage() {
-            if (!this.backgroundImage) return false
+            if (!this.$store.state.backgroundImage) return false
             const a = document.createElement("a")
-            a.href = this.backgroundImage
+            a.href = this.$store.state.backgroundImage
             a.download = `background-image.png`
             a.click()
-            this.log("Downloading...")
-        },
-    },
-    mounted() { }
+            ElMessage("Downloading...")
+        }
+    }
 }
 </script>
 

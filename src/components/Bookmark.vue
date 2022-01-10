@@ -20,6 +20,7 @@
         >
             <template #reference>
                 <div
+                    v-show="status"
                     class="box plus"
                     @click="addBookmarkPopover = !addBookmarkPopover"
                 >
@@ -60,7 +61,7 @@ import { ElNotification } from 'element-plus'
 export default {
     name: 'Bookmark',
     data: () => ({
-        password: "",
+        status: false,
         bookmarks: [],
         addBookmarkPopover: false,
         editBookmarkButtonLoading: false,
@@ -87,6 +88,7 @@ export default {
             window.open(url, "_blank")
         },
         editBookmarkAction() {
+            if (!this.$global.bookmarkApi) return
             const title = this.editBookmark.title.trim()
             const url = this.editBookmark.url.trim()
             if (title === "" || url === "") {
@@ -102,7 +104,7 @@ export default {
                 })
                 this.editBookmarkButtonLoading = true
                 this.$axios.post(
-                    `${this.$global.api}/api/bookmark?password=${this.password}`,
+                    this.$global.bookmarkApi,
                     { bookmarks }
                 ).then(response => {
                     if (response.data === "Success") {
@@ -118,16 +120,17 @@ export default {
             }
         }
     },
-    created() {
-        this.password = this.$global.getQueryVariable("password")
-    },
     mounted() {
         // 书签
-        this.$axios.get(
-            `${this.$global.api}/api/bookmark?password=${this.password}`
-        ).then(response => {
-            this.bookmarks = response.data
-        })
+        if (this.$global.bookmarkApi) {
+            this.$axios.get(this.$global.bookmarkApi).then(response => {
+                this.status = true
+                this.bookmarks = response.data
+            }).catch(() => {
+                this.status = false
+                ElNotification.error("Bookmark load field.")
+            })
+        }
     }
 }
 </script>
