@@ -1,97 +1,38 @@
 <template>
     <div
         class="container"
-        :style="{'background-image': `url(${backgroundImage})`}"
+        :style="{'background-image': `url(${$store.state.backgroundImage})`}"
     >
         <search-box />
         <bookmark />
-        <div
-            class="setting-button"
-            @click="dialogSettingVisible = true"
-        >
-            <i class="bi bi-gear"></i>
-        </div>
-        <el-dialog
-            v-model="dialogSettingVisible"
-            title="Setting"
-            width="50%"
-        >
-            <el-link
-                type="primary"
-                @click="downloadBackgroundImage()"
-            >
-                Download Background Image
-            </el-link>
-            <template #footer>
-                <span class="dialog-footer">
-                    <el-button @click="dialogSettingVisible = false">Cancel</el-button>
-                </span>
-            </template>
-        </el-dialog>
+        <setting class="setting" />
     </div>
 </template>
 
 <script>
 import SearchBox from './components/SearchBox.vue'
 import Bookmark from './components/Bookmark.vue'
+import Setting from './components/Setting.vue'
 
 export default {
     name: 'App',
     components: {
         SearchBox,
-        Bookmark
+        Bookmark,
+        Setting
     },
     data: () => ({
-        darkMode: false,
-        imageApi: "",
-        backgroundImage: "", // 背景图片，由 created 进行初始化
-        dialogSettingVisible: false
+        darkMode: false
     }),
-    methods: {
-        log(message) {
-            console.log(message)
-        },
-        getBase64ImageFromUrl(url, callback) {
-            if (typeof callback != "function") {
-                callback = url => console.log(url)
-            }
-            this.$axios.get(url, { responseType: 'blob' }).then(response => {
-                callback(window.URL.createObjectURL(response.data))
-            })
-        },
-        downloadBackgroundImage() {
-            if (!this.backgroundImage) return false
-            const a = document.createElement("a")
-            a.href = this.backgroundImage
-            a.download = `background-image.png`
-            a.click()
-            this.log("Downloading...")
-        },
-        selectSearchEngine(engine) {
-            this.searchEngine = engine
-            this.$global.localData.set("searchEngine", engine)
-        },
-        search() {
-            const kw = this.$refs.kw.value
-            if (kw === "") {
-                alert("没输入关键字哦")
-            } else {
-                window.open(this.searchEngine.query.replace("{}", encodeURI(kw)), "_blank")
-            }
-        }
-    },
+    methods: {},
     created() {
         if (this.$global.localData.get("darkMode") === null) {
             this.$global.localData.set("darkMode", false)
         }
         this.$store.commit("SET_DARK_MODE", this.$global.localData.get("darkMode") === "true")
-    },
-    mounted() {
         // 背景图片
-        if (!this.imageApi)
-            this.imageApi = this.$global.backgroundImageApi
-        this.getBase64ImageFromUrl(this.imageApi, image => {
-            this.backgroundImage = image
+        this.$global.getBase64ImageFromUrl(this.$global.backgroundImageApi, image => {
+            this.$store.commit("SET_BACKGROUND_IMAGE", image)
         })
     }
 }
@@ -108,6 +49,9 @@ body {
 .sr-only {
     display: none;
 }
+</style>
+
+<style scoped>
 .container {
     height: 100vh;
     width: 100vw;
@@ -117,7 +61,8 @@ body {
     background-position-y: center;
     background-size: cover;
 }
-.setting-button {
+
+.setting {
     cursor: pointer;
     position: absolute;
     right: 60px;

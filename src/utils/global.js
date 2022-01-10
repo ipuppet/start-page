@@ -1,3 +1,5 @@
+import axios from "axios"
+
 class LocalData {
     get(name, _default = null) {
         if (localStorage.getItem(name + "_obj")) {
@@ -83,6 +85,15 @@ function getQueryVariable(variable) {
     return false
 }
 
+function getBase64ImageFromUrl(url, callback) {
+    if (typeof callback != "function") {
+        callback = url => console.log(url)
+    }
+    axios.get(url, { responseType: 'blob' }).then(response => {
+        callback(window.URL.createObjectURL(response.data))
+    })
+}
+
 const localData = new LocalData()
 const sessionData = new SessionData()
 
@@ -92,6 +103,7 @@ export default {
     localData,
     sessionData,
     api,
-    backgroundImageApi: "",
-    getQueryVariable
+    backgroundImageApi: `${api}/image/background/background.png`,
+    getQueryVariable,
+    getBase64ImageFromUrl
 }
