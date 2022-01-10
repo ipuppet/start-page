@@ -140,7 +140,9 @@ export default {
     position: absolute;
     width: 80vw;
     left: 10%;
-    bottom: 20%;
+    top: calc(80% - 80px);
+    max-height: 165px;
+    overflow: auto;
     text-align: center;
 }
 .box {
