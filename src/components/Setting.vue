@@ -14,15 +14,16 @@
             <el-space
                 alignment="flex-start"
                 direction="vertical"
+                size="large"
             >
                 <setting-label
-                    :title="'Download Background Image'"
-                    @click="downloadBackgroundImage()"
+                    title="Download Background Image"
+                    :onClick="downloadBackgroundImage"
                 />
                 <setting-label
-                    :title="'Clear Bookmark Cache'"
-                    :description="'After clearing the cache, the bookmark information will be reloaded from the server'"
-                    @click="clearBookmarkCache()"
+                    title="Clear Bookmark Cache"
+                    description="After clearing the cache, the bookmark information will be reloaded from the server."
+                    :onClick="clearBookmarkCache"
                 />
             </el-space>
         </el-dialog>

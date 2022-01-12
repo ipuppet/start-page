@@ -1,9 +1,13 @@
 <template>
     <div>
-        <span class="title">
+        <span
+            class="title"
+            @click="onClick()"
+        >
             {{ title }}
         </span>
-        <span>
+        <br>
+        <span class="description">
             {{ description }}
         </span>
     </div>
@@ -14,16 +18,22 @@ export default {
     name: 'SettingLabel',
     props: {
         title: String,
-        description: String
+        description: String,
+        onClick: Function
     }
 }
 </script>
 
 <style scoped>
 .title {
+    font-size: 16px;
     cursor: pointer;
 }
 .title:hover {
     color: darkcyan;
+}
+.description {
+    font-size: 14px;
+    color: #adadad;
 }
 </style>
