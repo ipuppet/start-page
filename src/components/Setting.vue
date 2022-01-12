@@ -1,6 +1,9 @@
 <template>
     <div>
-        <div @click="dialogSettingVisible = true">
+        <div
+            class="setting-button"
+            @click="dialogSettingVisible = true"
+        >
             <i class="bi bi-gear"></i>
         </div>
         <el-dialog
@@ -8,26 +11,33 @@
             title="Setting"
             width="50%"
         >
-            <el-link
-                type="primary"
-                @click="downloadBackgroundImage()"
+            <el-space
+                alignment="flex-start"
+                direction="vertical"
             >
-                Download Background Image
-            </el-link>
-            <template #footer>
-                <span class="dialog-footer">
-                    <el-button @click="dialogSettingVisible = false">Cancel</el-button>
-                </span>
-            </template>
+                <setting-label
+                    :title="'Download Background Image'"
+                    @click="downloadBackgroundImage()"
+                />
+                <setting-label
+                    :title="'Clear Bookmark Cache'"
+                    :description="'After clearing the cache, the bookmark information will be reloaded from the server'"
+                    @click="clearBookmarkCache()"
+                />
+            </el-space>
         </el-dialog>
     </div>
 </template>
 
 <script>
 import { ElMessage } from 'element-plus'
+import SettingLabel from './SettingComponents/SettingLabel.vue'
 
 export default {
     name: 'Setting',
+    components: {
+        SettingLabel
+    },
     data: () => ({
         dialogSettingVisible: false
     }),
@@ -39,10 +49,17 @@ export default {
             a.download = `background-image.png`
             a.click()
             ElMessage("Downloading...")
+        },
+        clearBookmarkCache() {
+            this.$global.localData.remove("bookmarks")
+            ElMessage.success("Success")
         }
     }
 }
 </script>
 
 <style scoped>
+.setting-button {
+    cursor: pointer;
+}
 </style>

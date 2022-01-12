@@ -120,12 +120,17 @@ export default {
             }
         }
     },
-    mounted() {
+    created() {
         // 书签
-        if (this.$global.bookmarkApi) {
+        const bookmarks = this.$global.localData.get("bookmarks")
+        if (bookmarks) {
+            this.status = true
+            this.bookmarks = bookmarks
+        } else if (this.$global.bookmarkApi) {
             this.$axios.get(this.$global.bookmarkApi).then(response => {
                 this.status = true
                 this.bookmarks = response.data
+                this.$global.localData.set("bookmarks", response.data)
             }).catch(() => {
                 this.status = false
                 ElNotification.error("Bookmark load field.")

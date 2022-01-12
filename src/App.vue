@@ -63,7 +63,6 @@ body {
 }
 
 .setting {
-    cursor: pointer;
     position: absolute;
     right: 60px;
     top: 60px;
