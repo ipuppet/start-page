@@ -13,7 +13,7 @@
         >
             <el-space
                 alignment="flex-start"
-                direction="vertical"
+                :fill="true"
                 :size="30"
             >
                 <setting-text-button

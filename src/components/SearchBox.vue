@@ -6,7 +6,7 @@
         >Search</label>
         <input
             id="kw"
-            ref="kw"
+            v-model="kw"
             :class="{dark: $store.state.darkMode}"
             class="search-box-input"
             placeholder="Search..."
@@ -45,6 +45,7 @@
 export default {
     name: "SearchBox",
     data: () => ({
+        kw: "",
         searchEngines: [
             {
                 name: "Google",
@@ -79,11 +80,14 @@ export default {
             this.$global.localData.set("searchEngine", engine)
         },
         search() {
-            const kw = this.$refs.kw.value
-            if (kw === "") {
+            if (this.kw === "") {
                 alert("没输入关键字哦")
             } else {
-                window.open(this.searchEngine.query.replace("{}", encodeURI(kw)), "_blank")
+                window.open(this.searchEngine.query.replace("{}", encodeURI(this.kw)), "_blank")
+                if (this.$store.state.setting.autoClearInputBox) {
+                    this.kw = ""
+                }
+
             }
         }
     },

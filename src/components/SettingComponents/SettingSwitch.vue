@@ -48,4 +48,7 @@ export default {
 </script>
 
 <style scoped>
+.switch {
+    text-align: right;
+}
 </style>
