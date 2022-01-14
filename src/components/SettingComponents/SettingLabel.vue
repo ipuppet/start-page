@@ -15,7 +15,7 @@
 
 <script>
 export default {
-    name: 'SettingLabel',
+    name: "SettingLabel",
     props: {
         title: String,
         description: String,

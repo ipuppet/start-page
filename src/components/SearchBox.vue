@@ -30,7 +30,12 @@
                 @click="selectSearchEngine(engine)"
                 :class="{active: engine.name === searchEngine.name}"
             >
-                {{ engine.name }}
+                <img
+                    v-if="engine.icon"
+                    style="width: auto; height: 100%"
+                    :src="engine.icon"
+                />
+                <span v-else>{{ engine.name }}</span>
             </button>
         </div>
     </div>
@@ -38,19 +43,22 @@
 
 <script>
 export default {
-    name: 'SearchBox',
+    name: "SearchBox",
     data: () => ({
         searchEngines: [
             {
                 name: "Google",
+                icon: "@assets/searchEngineIcons/google.png",
                 query: "https://www.google.com/search?q={}"
             },
             {
                 name: "Bing",
+                icon: "@assets/searchEngineIcons/bing.png",
                 query: "https://cn.bing.com/search?q={}"
             },
             {
                 name: "Baidu",
+                icon: "@assets/searchEngineIcons/baidu.png",
                 query: "https://www.baidu.com/s?ie=utf-8&word={}"
             }
         ],

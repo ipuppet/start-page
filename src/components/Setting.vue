@@ -31,11 +31,11 @@
 </template>
 
 <script>
-import { ElMessage } from 'element-plus'
-import SettingLabel from './SettingComponents/SettingLabel.vue'
+import { ElMessage } from "element-plus"
+import SettingLabel from "./SettingComponents/SettingLabel.vue"
 
 export default {
-    name: 'Setting',
+    name: "Setting",
     components: {
         SettingLabel
     },

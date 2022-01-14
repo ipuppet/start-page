@@ -56,10 +56,10 @@
 </template>
 
 <script>
-import { ElNotification } from 'element-plus'
+import { ElNotification } from "element-plus"
 
 export default {
-    name: 'Bookmark',
+    name: "Bookmark",
     data: () => ({
         status: false,
         bookmarks: [],
@@ -93,9 +93,9 @@ export default {
             const url = this.editBookmark.url.trim()
             if (title === "" || url === "") {
                 ElNotification({
-                    title: 'Warning',
-                    message: 'Title 或 Url 不能为空',
-                    type: 'warning',
+                    title: "Warning",
+                    message: "Title 或 Url 不能为空",
+                    type: "warning",
                 })
             } else {
                 const bookmarks = JSON.parse(JSON.stringify(this.bookmarks))

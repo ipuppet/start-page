@@ -1,5 +1,5 @@
 import axios from "axios"
-import { Base64 } from 'js-base64'
+import { Base64 } from "js-base64"
 
 class LocalData {
     get(name, _default = null) {
@@ -90,7 +90,7 @@ function getBase64ImageFromUrl(url, callback) {
     if (typeof callback != "function") {
         callback = url => console.log(url)
     }
-    axios.get(url, { responseType: 'blob' }).then(response => {
+    axios.get(url, { responseType: "blob" }).then(response => {
         callback(window.URL.createObjectURL(response.data))
     })
 }

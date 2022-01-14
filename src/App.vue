@@ -10,12 +10,12 @@
 </template>
 
 <script>
-import SearchBox from './components/SearchBox.vue'
-import Bookmark from './components/Bookmark.vue'
-import Setting from './components/Setting.vue'
+import SearchBox from "./components/SearchBox.vue"
+import Bookmark from "./components/Bookmark.vue"
+import Setting from "./components/Setting.vue"
 
 export default {
-    name: 'App',
+    name: "App",
     components: {
         SearchBox,
         Bookmark,
