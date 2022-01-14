@@ -32,8 +32,8 @@
             >
                 <img
                     v-if="engine.icon"
-                    style="width: auto; height: 100%"
-                    :src="engine.icon"
+                    style="width: auto; height: 80%"
+                    :src="engine.name === searchEngine.name ? engine.icon[1] : engine.icon[0]"
                 />
                 <span v-else>{{ engine.name }}</span>
             </button>
@@ -48,17 +48,26 @@ export default {
         searchEngines: [
             {
                 name: "Google",
-                icon: "@assets/searchEngineIcons/google.png",
+                icon: [ // 0: 未选中图标, 1: 选中图标
+                    require("@/assets/searchEngineIcons/google.png"),
+                    require("@/assets/searchEngineIcons/google-selected.png")
+                ],
                 query: "https://www.google.com/search?q={}"
             },
             {
                 name: "Bing",
-                icon: "@assets/searchEngineIcons/bing.png",
+                icon: [
+                    require("@/assets/searchEngineIcons/bing.png"),
+                    require("@/assets/searchEngineIcons/bing-selected.png")
+                ],
                 query: "https://cn.bing.com/search?q={}"
             },
             {
                 name: "Baidu",
-                icon: "@assets/searchEngineIcons/baidu.png",
+                icon: [
+                    require("@/assets/searchEngineIcons/baidu.png"),
+                    require("@/assets/searchEngineIcons/baidu-selected.png")
+                ],
                 query: "https://www.baidu.com/s?ie=utf-8&word={}"
             }
         ],
