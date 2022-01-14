@@ -9,21 +9,27 @@
         <el-dialog
             v-model="dialogSettingVisible"
             title="Setting"
-            width="50%"
+            width="60%"
         >
             <el-space
                 alignment="flex-start"
                 direction="vertical"
-                size="large"
+                :size="30"
             >
-                <setting-label
-                    title="Download Background Image"
-                    :onClick="downloadBackgroundImage"
+                <setting-text-button
+                    title="Download background image"
+                    @onClick="downloadBackgroundImage"
                 />
-                <setting-label
-                    title="Clear Bookmark Cache"
+                <setting-text-button
+                    title="Clear bookmark cache"
                     description="After clearing the cache, the bookmark information will be reloaded from the server."
-                    :onClick="clearBookmarkCache"
+                    @onClick="clearBookmarkCache"
+                />
+                <setting-switch
+                    title="Auto clear input box"
+                    description="Automatically clear the content of the input box after triggering the search."
+                    settingKey="autoClearInputBox"
+                    @onChange="updateSetting"
                 />
             </el-space>
         </el-dialog>
@@ -32,17 +38,24 @@
 
 <script>
 import { ElMessage } from "element-plus"
-import SettingLabel from "./SettingComponents/SettingLabel.vue"
+import SettingTextButton from "./SettingComponents/SettingTextButton.vue"
+import SettingSwitch from "./SettingComponents/SettingSwitch.vue"
 
 export default {
     name: "Setting",
     components: {
-        SettingLabel
+        SettingTextButton,
+        SettingSwitch
     },
     data: () => ({
-        dialogSettingVisible: false
+        dialogSettingVisible: false,
     }),
     methods: {
+        updateSetting(key, value) {
+            this.$store.commit("UPDATE_SETTING", [key, value])
+            this.$global.localData.set("setting", this.$store.state.setting)
+            window.console.log(`Setting: ${key} -> ${value}`)
+        },
         downloadBackgroundImage() {
             if (!this.$store.state.backgroundImage) return false
             const a = document.createElement("a")
@@ -55,6 +68,10 @@ export default {
             this.$global.localData.remove("bookmarks")
             ElMessage.success("Success")
         }
+    },
+    created() {
+        // 初始化数据
+        this.$store.commit("SET_SETTING", this.$global.localData.get("setting", {}))
     }
 }
 </script>
