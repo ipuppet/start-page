@@ -115,6 +115,7 @@ export default {
                             title: "",
                             url: ""
                         }
+                        this.$global.localData.set("bookmarks", bookmarks)
                     }
                 })
             }
