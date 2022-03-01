@@ -82,7 +82,7 @@ export default {
                 bookmark.url = "http://" + bookmark.url
             }
             const url = new URL(bookmark.url)
-            return `${url.protocol}//${url.hostname}/favicon.ico`
+            return `http://www.google.com/s2/favicons?sz=64&domain_url=${url.hostname}`
         },
         openUrl: url => {
             window.open(url, "_blank")
