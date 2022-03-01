@@ -5,13 +5,16 @@
             :key="bookmark.url"
             class="box"
             @click="openUrl(bookmark.url)"
+            :title="bookmark.title"
         >
             <div class="icon">
                 <img :src="getIcon(bookmark)">
             </div>
-            <span class="icon-title">
-                {{ bookmark.title }}
-            </span>
+            <div class="icon-title-box">
+                <span class="icon-title">
+                    {{ bookmark.title }}
+                </span>
+            </div>
         </div>
         <el-popover
             placement="top"
@@ -176,9 +179,14 @@ export default {
     height: 24px;
     vertical-align: middle;
 }
-.icon-title {
+.icon-title-box {
+    width: calc(100% - 20px);
+    margin: 0 10px;
+    overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+.icon-title {
     font-size: 10px;
 }
 .plus {
