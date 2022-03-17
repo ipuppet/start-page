@@ -62,7 +62,7 @@
 import { ElNotification } from "element-plus"
 
 export default {
-    name: "Bookmark",
+    name: "BookmarkBox",
     data: () => ({
         status: false,
         bookmarks: [],

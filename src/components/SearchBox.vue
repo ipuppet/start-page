@@ -42,6 +42,13 @@
 </template>
 
 <script>
+import ImageGoogle from "@/assets/searchEngineIcons/google.png"
+import ImageGoogleSelected from "@/assets/searchEngineIcons/google-selected.png"
+import ImageBing from "@/assets/searchEngineIcons/bing.png"
+import ImageBingSelected from "@/assets/searchEngineIcons/bing-selected.png"
+import ImageBaidu from "@/assets/searchEngineIcons/baidu.png"
+import ImageBaiduSelected from "@/assets/searchEngineIcons/baidu-selected.png"
+
 export default {
     name: "SearchBox",
     data: () => ({
@@ -50,24 +57,24 @@ export default {
             {
                 name: "Google",
                 icon: [ // 0: 未选中图标, 1: 选中图标
-                    require("@/assets/searchEngineIcons/google.png"),
-                    require("@/assets/searchEngineIcons/google-selected.png")
+                    ImageGoogle,
+                    ImageGoogleSelected
                 ],
                 query: "https://www.google.com/search?q={}"
             },
             {
                 name: "Bing",
                 icon: [
-                    require("@/assets/searchEngineIcons/bing.png"),
-                    require("@/assets/searchEngineIcons/bing-selected.png")
+                    ImageBing,
+                    ImageBingSelected
                 ],
                 query: "https://cn.bing.com/search?q={}"
             },
             {
                 name: "Baidu",
                 icon: [
-                    require("@/assets/searchEngineIcons/baidu.png"),
-                    require("@/assets/searchEngineIcons/baidu-selected.png")
+                    ImageBaidu,
+                    ImageBaiduSelected
                 ],
                 query: "https://www.baidu.com/s?ie=utf-8&word={}"
             }

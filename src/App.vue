@@ -4,22 +4,22 @@
         :style="{'background-image': `url(${$store.state.backgroundImage})`}"
     >
         <search-box />
-        <bookmark />
-        <setting class="setting" />
+        <bookmark-box />
+        <setting-panel class="setting" />
     </div>
 </template>
 
 <script>
 import SearchBox from "./components/SearchBox.vue"
-import Bookmark from "./components/Bookmark.vue"
-import Setting from "./components/Setting.vue"
+import BookmarkBox from "./components/BookmarkBox.vue"
+import SettingPanel from "./components/SettingPanel.vue"
 
 export default {
     name: "App",
     components: {
         SearchBox,
-        Bookmark,
-        Setting
+        BookmarkBox,
+        SettingPanel
     },
     data: () => ({
         darkMode: false

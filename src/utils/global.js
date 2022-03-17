@@ -99,7 +99,7 @@ const localData = new LocalData()
 const sessionData = new SessionData()
 
 // 从 get 查找是否指定了背景图片，第二个参数为默认值
-const backgroundImageApi = Base64.decode(getQueryVariable("background"))
+const backgroundImageApi = Base64.decode(getQueryVariable("background", ""))
 // 书签接口
 const api = `${process.env.VUE_APP_TRANSFER_PROTOCOL}://${process.env.VUE_APP_DOMAIN}`
 const bookmarkApi = Base64.decode(getQueryVariable("bookmarkApi", Base64.encode(`${api}/api/bookmark`)))

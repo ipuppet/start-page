@@ -42,7 +42,7 @@ import SettingTextButton from "./SettingComponents/SettingTextButton.vue"
 import SettingSwitch from "./SettingComponents/SettingSwitch.vue"
 
 export default {
-    name: "Setting",
+    name: "SettingPanel",
     components: {
         SettingTextButton,
         SettingSwitch
