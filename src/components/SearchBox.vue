@@ -157,7 +157,7 @@ export default {
     width: 80px;
     height: 34px;
     border-radius: 17px;
-    font-size: 16px;
+    font-size: 12px;
     margin: 0 10px 0 10px;
 }
 .search-with button.active {
