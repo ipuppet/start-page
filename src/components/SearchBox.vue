@@ -113,6 +113,7 @@ export default {
     padding: 0 20px 0 20px;
     border-radius: 23px;
     border: none;
+    font-size: 16px;
 }
 .search-box-input:focus {
     outline: none;
@@ -156,7 +157,7 @@ export default {
     width: 80px;
     height: 34px;
     border-radius: 17px;
-    font-size: 12px;
+    font-size: 16px;
     margin: 0 10px 0 10px;
 }
 .search-with button.active {
