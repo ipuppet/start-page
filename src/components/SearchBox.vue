@@ -87,7 +87,6 @@ export default {
                 if (this.$store.state.setting.autoClearInputBox) {
                     this.kw = ""
                 }
-
             }
         }
     },
