@@ -98,10 +98,10 @@ function getBase64ImageFromUrl(url, callback) {
 const localData = new LocalData()
 const sessionData = new SessionData()
 
-const api = `${process.env.VUE_APP_TRANSFER_PROTOCOL}://${process.env.VUE_APP_DOMAIN}`
 // 从 get 查找是否指定了背景图片，第二个参数为默认值
 const backgroundImageApi = Base64.decode(getQueryVariable("background"))
 // 书签接口
+const api = `${process.env.VUE_APP_TRANSFER_PROTOCOL}://${process.env.VUE_APP_DOMAIN}`
 const bookmarkApi = Base64.decode(getQueryVariable("bookmarkApi", Base64.encode(`${api}/api/bookmark`)))
 // 书签密码
 const bookmarkApiPassword = getQueryVariable("bookmarkApiPassword")
