@@ -26,14 +26,28 @@ export default {
     }),
     methods: {},
     created() {
+        // 初始化数据
+        const setting = this.$global.localData.get("setting")
+        if (setting) {
+            this.$store.commit("SET_SETTING", setting)
+        }
+
         if (this.$global.localData.get("darkMode") === null) {
             this.$global.localData.set("darkMode", false)
         }
+
+        // 深色模式
         this.$store.commit("SET_DARK_MODE", this.$global.localData.get("darkMode") === "true")
+
         // 背景图片
-        this.$global.getBase64ImageFromUrl(this.$global.backgroundImageApi, image => {
-            this.$store.commit("SET_BACKGROUND_IMAGE", image)
-        })
+        if (this.$store.state.setting.enableDownloadMode) {
+            this.$global.getBase64ImageFromUrl(this.$store.state.setting.backgroundImageApi)
+                .then(image => {
+                    this.$store.commit("SET_BACKGROUND_IMAGE", image)
+                })
+        } else {
+            this.$store.commit("SET_BACKGROUND_IMAGE", this.$store.state.setting.backgroundImageApi)
+        }
     }
 }
 </script>

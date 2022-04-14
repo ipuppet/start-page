@@ -1,6 +1,8 @@
 <template>
-    <el-row class="description">
-        {{ description }}
+    <el-row
+        class="description"
+        v-html="description"
+    >
     </el-row>
 </template>
 

@@ -9,6 +9,7 @@
                 :span="6"
             >
                 <el-switch
+                    size="small"
                     v-model="status"
                     @change="onChange"
                 />
@@ -30,19 +31,20 @@ export default {
     },
     props: {
         title: String,
-        description: String,
-        settingKey: String
+        settingKey: String,
+        description: String
     },
     data: () => ({
         status: false
     }),
     methods: {
         onChange(status) {
-            this.$emit("onChange", this.settingKey, status)
+            this.$store.commit("UPDATE_SETTING", [this.settingKey, status])
+            this.$emit("onChange", status)
         }
     },
     created() {
-        this.status = this.$store.state.setting[this.settingKey]
+        this.status = this.$store.state.setting[this.settingKey] ?? false
     }
 }
 </script>

@@ -16,7 +16,19 @@
                 :fill="true"
                 :size="30"
             >
+                <setting-input
+                    title="Background image API"
+                    description=""
+                    settingKey="backgroundImageApi"
+                    @onSave="setBackgroundImageAPI"
+                />
+                <setting-switch
+                    title="Enable Download Mode"
+                    description="Turning this on will allow the current background image to be saved.<br>Note that this is subject to the browser CORS policy, so please turn it off if you cannot display the background image."
+                    settingKey="enableDownloadMode"
+                />
                 <setting-text-button
+                    v-if="$store.state.setting.enableDownloadMode"
                     title="Download background image"
                     @onClick="downloadBackgroundImage"
                 />
@@ -29,7 +41,6 @@
                     title="Auto clear input box"
                     description="Automatically clear the content of the input box after triggering the search."
                     settingKey="autoClearInputBox"
-                    @onChange="updateSetting"
                 />
             </el-space>
         </el-dialog>
@@ -40,12 +51,14 @@
 import { ElMessage } from "element-plus"
 import SettingTextButton from "./SettingComponents/SettingTextButton.vue"
 import SettingSwitch from "./SettingComponents/SettingSwitch.vue"
+import SettingInput from "./SettingComponents/SettingInput.vue"
 
 export default {
     name: "SettingPanel",
     components: {
         SettingTextButton,
-        SettingSwitch
+        SettingSwitch,
+        SettingInput
     },
     data: () => ({
         dialogSettingVisible: false,
@@ -53,8 +66,19 @@ export default {
     methods: {
         updateSetting(key, value) {
             this.$store.commit("UPDATE_SETTING", [key, value])
-            this.$global.localData.set("setting", this.$store.state.setting)
-            window.console.log(`Setting: ${key} -> ${value}`)
+        },
+        setBackgroundImageAPI(api = "") {
+            if (api !== "") {
+                if (this.$store.state.setting.enableDownloadMode) {
+                    this.$global.getBase64ImageFromUrl(this.$store.state.setting.backgroundImageApi)
+                        .then(image => {
+                            this.$store.commit("SET_BACKGROUND_IMAGE", image)
+                        })
+                } else {
+                    this.$store.commit("SET_BACKGROUND_IMAGE", api)
+                }
+            }
+            ElMessage.success("Save success")
         },
         downloadBackgroundImage() {
             if (!this.$store.state.backgroundImage) return false
@@ -68,10 +92,6 @@ export default {
             this.$global.localData.remove("bookmarks")
             ElMessage.success("Success")
         }
-    },
-    created() {
-        // 初始化数据
-        this.$store.commit("SET_SETTING", this.$global.localData.get("setting", {}))
     }
 }
 </script>

@@ -1,5 +1,6 @@
 import axios from "axios"
 import { Base64 } from "js-base64"
+import { ElNotification } from "element-plus"
 
 class LocalData {
     get(name, _default = null) {
@@ -74,6 +75,9 @@ class SessionData {
     }
 }
 
+const localData = new LocalData()
+const sessionData = new SessionData()
+
 function getQueryVariable(variable, _default = null) {
     const query = window.location.search.substring(1)
     const vars = query.split("&")
@@ -86,31 +90,51 @@ function getQueryVariable(variable, _default = null) {
     return _default
 }
 
-function getBase64ImageFromUrl(url, callback) {
-    if (typeof callback != "function") {
-        callback = url => console.log(url)
-    }
-    axios.get(url, { responseType: "blob" }).then(response => {
-        callback(window.URL.createObjectURL(response.data))
+function getBase64ImageFromUrl(url) {
+    return new Promise((resolve, reject) => {
+        url = url?.trim()
+        if (!url || url === "") {
+            reject("empty url")
+            return
+        }
+
+        axios.get(url, { responseType: "blob" })
+            .then(response => {
+                const objectURL = window.URL.createObjectURL(response.data)
+
+                resolve(objectURL)
+            })
+            .catch(error => {
+                ElNotification.error({
+                    title: "Unable to get image",
+                    message: `image url: ${url}`
+                })
+
+                reject(error)
+            })
     })
 }
 
-const localData = new LocalData()
-const sessionData = new SessionData()
+function getConfigFromURL(key, _default = null) {
+    try {
+        return Base64.decode(getQueryVariable(key))
+    } catch {
+        return _default
+    }
+}
 
-// 从 get 查找是否指定了背景图片，第二个参数为默认值
-const backgroundImageApi = Base64.decode(getQueryVariable("background", ""))
 // 书签接口
 const api = `${process.env.VUE_APP_TRANSFER_PROTOCOL}://${process.env.VUE_APP_DOMAIN}`
-const bookmarkApi = Base64.decode(getQueryVariable("bookmarkApi", Base64.encode(`${api}/api/bookmark`)))
+const bookmarkApi = getConfigFromURL("bookmarkApi", `${api}/api/bookmark`)
+
 // 书签密码
 const bookmarkApiPassword = getQueryVariable("bookmarkApiPassword")
 
 export default {
     localData,
     sessionData,
-    backgroundImageApi,
     bookmarkApi: bookmarkApiPassword ? `${bookmarkApi}?password=${bookmarkApiPassword}` : null,
     getQueryVariable,
+    getConfigFromURL,
     getBase64ImageFromUrl
 }

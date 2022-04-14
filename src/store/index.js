@@ -1,10 +1,15 @@
 import { createStore } from "vuex"
+import global from "../utils/global"
 
 export default createStore({
     state: {
         darkMode: false,
-        backgroundImage: "",
-        setting: {}
+        backgroundImage: "", // 此处需为 base64 图片，用来显示以及下载当前图片
+        setting: {
+            // 下载图片会触发跨域
+            backgroundImageApi: global.getConfigFromURL("background", ""),
+            enableDownloadMode: true
+        }
     },
     mutations: {
         SET_DARK_MODE(state, darkMode) {
@@ -18,6 +23,8 @@ export default createStore({
         },
         UPDATE_SETTING(state, [key, value]) {
             state.setting[key] = value
+            global.localData.set("setting", state.setting)
+            window.console.log(`Setting: ${key} -> ${value}`)
         }
     },
     actions: {
