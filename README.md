@@ -4,11 +4,11 @@
 
 # get 参数
 
-- backgroundImageApi
+- `backgroundImageApi`
 
     base64 编码的图片 URL
 
-- bookmarkApi
+- `bookmarkApi`
 
     base64 编码的后端地址，默认为：
 
@@ -17,7 +17,7 @@
     const bookmarkApi = Base64.encode(`${api}/api/bookmark`)
     ```
 
-- bookmarkApiPassword
+- `bookmarkApiPassword`
 
     后端接口所使用的密码，不要进行编码
 
@@ -27,13 +27,13 @@
 
 `https://yoursite.com/api/bookmark?password=yourpassword`
 
-您的后端需要验证 query 参数 `password`
+您的后端需要验证 `query` 参数 `password`
 
-- get 请求
+- `get` 请求
 
     获取书签
 
-- post 请求
+- `post` 请求
 
     保存书签
 
@@ -43,6 +43,7 @@
 [
     {
         "title": "哔哩哔哩 (゜-゜)つロ 干杯~-bilibili",
+        "icon": "https://www.bilibili.com/favicon.ico?v=1",
         "url": "https://www.bilibili.com"
     },
     {
@@ -51,3 +52,5 @@
     }
 ]
 ```
+
+其中 `icon` 为可选字段。
