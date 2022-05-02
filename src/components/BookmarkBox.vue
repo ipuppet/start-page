@@ -108,7 +108,7 @@ export default {
                 this.editBookmarkButtonLoading = true
                 this.$axios.post(
                     this.$global.bookmarkApi,
-                    { bookmarks }
+                    bookmarks
                 ).then(response => {
                     if (response.data.status) {
                         this.bookmarks = bookmarks
