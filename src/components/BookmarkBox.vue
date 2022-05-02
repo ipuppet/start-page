@@ -110,7 +110,7 @@ export default {
                     this.$global.bookmarkApi,
                     { bookmarks }
                 ).then(response => {
-                    if (response.data === "Success") {
+                    if (response.data.status) {
                         this.bookmarks = bookmarks
                         this.addBookmarkPopover = false
                         this.editBookmarkButtonLoading = false
