@@ -119,7 +119,12 @@ export default {
                             url: ""
                         }
                         this.$global.localData.set("bookmarks", bookmarks)
+                    } else {
+                        this.editBookmarkButtonLoading = false
+                        ElNotification.error("Bookmark update field.")
                     }
+                }).catch(error => {
+                    ElNotification.error(error)
                 })
             }
         }
